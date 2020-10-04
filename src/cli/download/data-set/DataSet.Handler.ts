@@ -26,11 +26,7 @@ export default class DownloadDataSetHandler extends FTPBaseHandler {
             response: params.response,
             transferType: params.arguments.binary ? "binary" : "ascii",
         };
-        try {
-            await DataSetUtils.downloadDataSet(params.connection, params.arguments.dataSet, options);
-        } catch (e) {
-            this.log.error(e);
-        }
+        await DataSetUtils.downloadDataSet(params.connection, params.arguments.dataSet, options);
 
         const successMsg = params.response.console.log(ZosFilesMessages.datasetDownloadedSuccessfully.message, file);
         this.log.info(successMsg);

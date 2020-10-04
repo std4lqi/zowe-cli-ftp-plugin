@@ -24,6 +24,7 @@ export interface IDownloadDataSetOption {
 }
 
 export interface IUploadDataSetOption {
+    content?: Buffer | string;
     dcb?: string;
     localFile?: string;
     transferType?: string;
@@ -130,11 +131,11 @@ export class DataSetUtils {
      *
      * @param connection - zos-node-accessor connection
      * @param dsn - dataset name
-     * @param content - content to upload
      * @param option - upload option
      */
-    public static async uploadDataSet(connection: any, dsn: string, content: Buffer | string, option: IUploadDataSetOption): Promise<void> {
+    public static async uploadDataSet(connection: any, dsn: string, option: IUploadDataSetOption): Promise<void> {
         const transferType = option.transferType || "ascii";
+        let content = option.content;
         if (option.localFile) {
             this.log.debug("Attempting to upload from local file '%s' to data set '%s' in transfer mode '%s'",
             option.localFile, dsn, transferType);
