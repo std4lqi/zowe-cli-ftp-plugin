@@ -17,7 +17,7 @@ import { StreamUtils } from "./StreamUtils";
 import { CoreUtils } from "./CoreUtils";
 
 export interface IDownloadFileOption {
-    size: number;
+    size?: number;
     localFile?: string;
     response?: IHandlerResponseApi;
     transferType: string;
@@ -173,7 +173,7 @@ export class UssUtils {
         }
     }
 
-    private static async deleteDirectory(connection: any, dir: string, response?: IHandlerResponseConsoleApi): Promise<any> {
+    public static async deleteDirectory(connection: any, dir: string, response?: IHandlerResponseConsoleApi): Promise<any> {
         const files = await connection.listDataset(dir);
         for (const file of files) {
             const filePath = PATH.join(dir, file.name);
