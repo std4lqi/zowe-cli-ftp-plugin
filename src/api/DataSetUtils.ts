@@ -11,26 +11,12 @@
 
 import * as fs from "fs";
 
-import { IHandlerResponseApi, IO, Logger } from "@zowe/imperative";
+import { IO, Logger } from "@zowe/imperative";
 import { CoreUtils } from "./CoreUtils";
 import { StreamUtils } from "./StreamUtils";
+import { IDownloadDataSetOption, IUploadDataSetOption, TRACK } from "./DataSetInterfaces";
 
-const TRACK = 56664;
-
-export interface IDownloadDataSetOption {
-    localFile?: string;
-    response?: IHandlerResponseApi;
-    transferType?: string;
-}
-
-export interface IUploadDataSetOption {
-    content?: Buffer | string;
-    dcb?: string;
-    localFile?: string;
-    transferType?: string;
-}
-
-export class DataSetUtils {
+export class DataSetUtilsV1 {
 
     /**
      * Lists datasets with the specified dataset name pattern.
@@ -55,7 +41,7 @@ export class DataSetUtils {
      * @param dsn - dataset name
      * @returns member entries
      */
-    public static async listMembers(connection: any, dsn: string) {
+    public static async listMembers(connection: any, dsn: string): Promise<any[]> {
         this.log.debug("List members of %s", dsn);
 
         const datasetname = dsn + "(*)";
